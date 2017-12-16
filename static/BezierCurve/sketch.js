@@ -1,15 +1,19 @@
-
 let curve;
+
 function preload() {
   curve = loadJSON("curve.json");
 }
 
-let subesh ;
+let subesh;
+
 function setup() {
 
   // put setup code here
-  let canvas = createCanvas(1200,700);
-  subesh = new Bezier(curve[0].start,curve[0].end,...curve[0].ctrpt);
+  let canvas = createCanvas(1200, 700);
+  curve = curve.curve;
+  curve.forEach((item) => {
+    subesh = new Bezier(item.start, item.end, ...item.ctrpt);
+  });
   noLoop();
 }
 
@@ -23,5 +27,8 @@ function draw() {
 
 function mousePressed() {
   subesh.update();
+  setInterval(function() {
+    redraw();
+  },25)
   redraw();
 }

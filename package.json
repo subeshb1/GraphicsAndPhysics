@@ -1,0 +1,23 @@
+{
+  "name": "graphicsandphysics",
+  "version": "1.0.0",
+  "description": "Some basic stuff",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/subeshb1/GraphicsAndPhysics.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/subeshb1/GraphicsAndPhysics/issues"
+  },
+  "homepage": "https://github.com/subeshb1/GraphicsAndPhysics#readme",
+  "dependencies": {
+    "ejs": "^2.5.7",
+    "express": "^4.16.2"
+  }
+}

@@ -9,7 +9,7 @@ let subesh;
 function setup() {
 
   // put setup code here
-  let canvas = createCanvas(1200, 700);
+  let canvas = createCanvas(1200, 900);
   curve = curve.curve;
   curve.forEach((item) => {
     subesh = new Bezier(item.start, item.end, ...item.ctrpt);

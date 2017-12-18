@@ -64,7 +64,7 @@ class Bezier {
         r: 100,
         g: 200,
         b: 100
-      
+
       },
       {
         r: 100,
@@ -81,7 +81,83 @@ class Bezier {
         r: 100,
         g: 200,
         b: 100
-      }
+      },{
+          r: 200,
+          g: 0,
+          b: 0
+        },
+        {
+          r: 200,
+          g: 50,
+          b: 50
+        },
+        {
+          r: 50,
+          g: 100,
+          b: 200
+        },
+        {
+          r: 100,
+          g: 200,
+          b: 100
+        },{
+            r: 200,
+            g: 0,
+            b: 0
+          },
+          {
+            r: 200,
+            g: 50,
+            b: 50
+          },
+          {
+            r: 50,
+            g: 100,
+            b: 200
+          },
+          {
+            r: 100,
+            g: 200,
+            b: 100
+          },{
+              r: 200,
+              g: 0,
+              b: 0
+            },
+            {
+              r: 200,
+              g: 50,
+              b: 50
+            },
+            {
+              r: 50,
+              g: 100,
+              b: 200
+            },
+            {
+              r: 100,
+              g: 200,
+              b: 100
+            },{
+                r: 200,
+                g: 0,
+                b: 0
+              },
+              {
+                r: 200,
+                g: 50,
+                b: 50
+              },
+              {
+                r: 50,
+                g: 100,
+                b: 200
+              },
+              {
+                r: 100,
+                g: 200,
+                b: 100
+              }
     ];
     let prev = this.start;
     for (let k = 0; k <= this.t; k += Math.abs(this.inc)) {
@@ -104,7 +180,7 @@ class Bezier {
             push();
             let c = ctrpt.length - 1;
             strokeWeight(2)
-            stroke(color[c].r, color[c].g, color[c].b);
+            stroke(color[c].r, color[c].g, color[c].b,90);
             line(pt[i].x, pt[i].y, pt[i + 1].x, pt[i + 1].y);
             pop();
           }

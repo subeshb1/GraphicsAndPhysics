@@ -17,9 +17,9 @@ class Scene {
     this.height = height;
     this.selectedItems = [];
     this.backgroundColor = {
-      r: 100,
-      g: 100,
-      b: 100,
+      r: 255,
+      g: 255,
+      b: 255,
       a: 255
     };
     this.item = [];
@@ -36,8 +36,80 @@ class Scene {
   }
 
 
-  handleMouseDrag(event) {
+  update() {
 
+  }
+
+  /**
+   * add - Description
+   *
+   * @param {GraphicsItem} graphicsItem - A GraphicsItem instance
+   *
+   */
+  add(...graphicsItem) {
+    for (let i = 0; i < graphicsItem.length; i++) {
+      if (graphicsItem[i] instanceof GraphicsItem) {
+        this.addChildren(graphicsItem[i]);
+        this.graphicsItem.push(graphicsItem[i]);
+        this.sort();
+      } else {
+        console.log("Warning Only GraphicsItem can be added to the Scene");
+      }
+    }
+  //  this.extract();
+  }
+
+  // /**
+  //  * extract - It extracts all the graphicsItem children and stores in this.graphicsItem array and then sorts it according to the z index
+  //  *
+  //  * @return {type} Description
+  //  */
+  // extract() {
+  //   this.item.forEach(graphicsItem => {
+  //     addChildren(graphicsItem);
+  //     this.graphicsItem.push(graphicsItem);
+  //   });
+  //   this.sort();
+  // }
+
+  sort() {
+    this.graphicsItem.sort((a, b) => {
+      return a.zindex < b.zindex;
+    })
+  }
+
+  /**
+   * getMouseX - Description
+   *
+   * @return {Number} - returns mouse x pos with respect to the scene;
+   */
+  getMouseX() {
+    return (mouseX - this.pos.x) / this.zoom;
+  }
+
+  /**
+   * getMouseY - Description
+   *
+   * @return {Number} - returns mouse y pos with respect to the scene;
+   */
+  getMouseY() {
+    return (mouseY - this.pos.y) / this.zoom;
+  }
+
+  addChildren(graphicsItem) {
+    if (!graphicsItem.children.length)
+      return;
+    graphicsItem.children.forEach(child => {
+      this.addChildren(child);
+      this.graphicsItem.push(child);
+    });
+
+  }
+
+  handleMouseDrag(event) {
+    this.graphicsItem.every((item) => {
+      return item.handleMouseDrag(this.getMouseX(), this.getMouseY(), event);
+    });
     if (this.draggable) {
 
       if (this.height * this.zoom > height) {
@@ -64,6 +136,10 @@ class Scene {
   }
 
   handleMousePressed(event) {
+    this.graphicsItem.every((item) => {
+      return item.handleMousePressed(this.getMouseX(), this.getMouseY(), event);
+    });
+
     if (this.draggable) {
 
       this.dragPoint = {
@@ -74,19 +150,19 @@ class Scene {
   }
 
   handleMouseReleased(event) {
-
+    this.graphicsItem.every((item) => {
+      return item.handleMouseReleased(this.getMouseX(), this.getMouseY(), event);
+    });
 
   }
 
   handleMouseMove(event) {
-    this.graphicsItem.forEach((item) => {
-      item.handleMouseIn(event);
+    this.graphicsItem.every((item) => {
+      return item.handleMouseMove(this.getMouseX(), this.getMouseY(), event);
     });
   }
 
-  handleMouseOut(event) {
 
-  }
 
   handleMouseWheel(event) {
     if (event.ctrlKey) {
@@ -95,64 +171,45 @@ class Scene {
       this.zoom += sensativity * event.delta;
 
       this.zoom = constrain(this.zoom, this.minZoom, this.maxZoom);
-      if(this.zoom < 1) {
-        this.pos.x = 0; this.pos.y = 0;
+      if (this.zoom < 1) {
+        this.pos.x = 0;
+        this.pos.y = 0;
       }
 
       return false;
-    }
+    } else
+      return true;
   }
 
+
   draw() {
+
     push();
+
     translate(this.pos.x, this.pos.y);
     scale(this.zoom);
     fill(this.backgroundColor.r, this.backgroundColor.g, this.backgroundColor.b, this.backgroundColor.a);
+
     push();
     noStroke();
-    rect(0, 0, this.width , this.height );
+    rect(0, 0, this.width, this.height);
     pop();
 
-    this.graphicsItem.forEach(item => item.draw());
+    this.graphicsItem.reverseEach(item => {
+      item.draw()
+      console.log(item);
+    });
 
 
     pop();
   }
 
-  update() {
 
+}
+
+Array.prototype.reverseEach = function(callback) {
+  let len = this.length;
+  for (let i = len-1; i >=0 ; i--) {
+    callback(this[i]);
   }
-
-  add(graphicsItem) {
-    if (graphicsItem instanceof GraphicsItem) {
-      this.item.push(graphicsItem);
-    } else {
-      console.log("Warning Only GraphicsItem can be added to the Scene");
-    }
-  }
-
-  extract() {
-    this.item.forEach(graphicsItem => {
-      addChildren(graphicsItem);
-      this.graphicsItem.push(graphicsItem);
-    });
-    this.sort();
-  }
-
-  sort() {
-    this.graphicsItem.sort((a, b) => {
-      return a.zindex > b.zindex;
-    })
-  }
-
-  addChildren(graphicsItem) {
-    if (!graphicsItem.children.length)
-      return;
-    graphicsItem.children.forEach(child => {
-      addChildren(child);
-      this.graphicsItem.push(child);
-    });
-
-  }
-
 }

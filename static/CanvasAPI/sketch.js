@@ -1,27 +1,29 @@
 let scene;
-let subesh = new Circle();
+let subesh = new Circle(100, 100, 100);
+
 function setup() {
   // put setup code here
-  let can = createCanvas(1400,900);
-  can.mouseOut(mouseOut);
-  can.mouseOver(mouseIn);
-  scene = new Scene();
-  scene.graphicsItem.push(subesh);
+  let can = createCanvas(1400, 900);
 
+  scene = new Scene();
+  subesh.children.push(new Circle(100, 80, 10));
+  //let cir = new Circle(150,150,100);
+
+  scene.add(subesh);
   noLoop();
 
 }
 
 function draw() {
   // put drawing code here
-  background(0);
+  background(255);
   scene.draw();
 }
 
 
 function mouseDragged(e) {
-    scene.handleMouseDrag(e);
-    redraw();
+  scene.handleMouseDrag(e);
+  redraw();
 }
 
 function mousePressed(e) {
@@ -35,26 +37,16 @@ function mouseReleased(e) {
   redraw();
 }
 
-function mouseIn(e) {
-//  scene.handleMouseIn(e);
-  redraw();
-}
-
-function mouseOut(e) {
-  scene.handleMouseOut(e);
-  redraw();
-
-
-}
 
 function mouseWheel(e) {
   let g = scene.handleMouseWheel(e);
-  redraw();
-  return false;
+  if (!g)
+    redraw();
+  return g;
 }
 
 
 function mouseMoved(e) {
   scene.handleMouseMove(e);
-  redraw();
+  //  redraw();
 }

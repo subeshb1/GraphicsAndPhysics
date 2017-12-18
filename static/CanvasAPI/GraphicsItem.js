@@ -30,37 +30,50 @@ class GraphicsItem {
     this.strokeWeight = 1;
 
   }
+
   setZindex(val) {
     this.zindex = val;
-    this.children.forEach((child) => child.zindex += this.zindex);
-
   }
-  addChild(graphicsItem) {
-    this.children.push(graphicsItem);
-    graphicsItem.zindex += this.zindex;
+
+  addChild(...graphicsItem) {
+    graphicsItem.forEach((graphicsItem) => {
+      this.children.push(graphicsItem);
+    });
   }
 
   handleMouseDrag(mousex, mousey, e) {
+    let notHandled = this.children.every(child => {
+      return child.handleMouseDrag(mousex - this.pos.x, mousey - this.pos.y, e);
+    });
 
-    if (this.isDragged) {
-      this.pos.x = mousex + this.draggedPoint.x;
-      this.pos.y = mousey + this.draggedPoint.y;
+    if (notHandled) {
+    //  console.log(this.isDragged);
+      if (this.isDragged) {
+        this.pos.x = mousex + this.draggedPoint.x;
+        this.pos.y = mousey + this.draggedPoint.y;
+
+        return false;
+      } else return true;
+    }else
       return false;
-    }
-
-
-    return true;
   }
 
   handleMouseMove(mousex, mousey, e) {
-    if (this.isDraggable && this.isInside(mousex, mousey)) {
-      cursor(MOVE);
-      return false;
-    } else {
-      cursor(ARROW);
-      return true;
-    }
+    let notHandled = this.children.every(child => {
 
+      return child.handleMouseMove(mousex - this.pos.x, mousey - this.pos.y, e);
+    });
+
+    if (notHandled) {
+      if (this.isDraggable && this.isInside(mousex, mousey)) {
+        cursor(MOVE);
+        return false;
+      } else {
+        cursor(ARROW);
+        return true;
+      }
+    }
+    return false;
 
   }
 
@@ -68,21 +81,49 @@ class GraphicsItem {
 
   }
   handleMousePressed(mousex, mousey, e) {
-    if (this.isInside(mousex, mousey)) {
-      if (this.isDraggable) {
-        this.isDragged = true;
-        this.draggedPoint.x =this.pos.x -  mousex;
-        this.draggedPoint.y = this.pos.y - mousey;
-      }
-
-
-      return false;
+    let notHandled = this.children.every(child => {
+      return child.handleMousePressed(mousex - this.pos.x, mousey - this.pos.y, e);
+    });
+    if (notHandled) {
+      if (this.isInside(mousex, mousey)) {
+        if (this.isDraggable) {
+          this.isDragged = true;
+          this.draggedPoint.x = this.pos.x - mousex;
+          this.draggedPoint.y = this.pos.y - mousey;
+          return false;
+        }
+      } return true;
     }
 
-    return true;
+    return false;
   }
-  handleMouseReleased(mousex, mousey, e) {
 
+  handleMouseReleased(mousex, mousey, e) {
+    let notHandled = this.children.every(child => {
+      return child.handleMouseReleased(mousex - this.pos.x, mousey - this.pos.y, e);
+    });
+    if (notHandled) {
+
+      if (this.isDraggable && this.isDragged) {
+        this.isDragged = false;
+        console.log(this.children.length);
+        return false;
+      }
+      return true
+
+    }
+
+    return false;
+  }
+
+  drawAll() {
+    push();
+    this.draw();
+    translate(this.pos.x, this.pos.y);
+
+    this.children.forEach(child => child.drawAll());
+
+    pop();
   }
   draw() {
 
@@ -117,7 +158,7 @@ class Circle extends GraphicsItem {
     pop();
   }
   isInside(mousex, mousey) {
-    if (dist(mousex, mousey, this.pos.x, this.pos.y) <= this.radius)
+    if (dist(mousex, mousey, this.pos.x + this.radius, this.pos.y + this.radius) <= this.radius)
       return true;
     return false;
   }

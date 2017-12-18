@@ -49,8 +49,8 @@ class Scene {
   add(...graphicsItem) {
     for (let i = 0; i < graphicsItem.length; i++) {
       if (graphicsItem[i] instanceof GraphicsItem) {
-        this.addChildren(graphicsItem[i]);
-        this.graphicsItem.push(graphicsItem[i]);
+
+        this.graphicsItem.unshift(graphicsItem[i]);
         this.sort();
       } else {
         console.log("Warning Only GraphicsItem can be added to the Scene");
@@ -59,18 +59,6 @@ class Scene {
   //  this.extract();
   }
 
-  // /**
-  //  * extract - It extracts all the graphicsItem children and stores in this.graphicsItem array and then sorts it according to the z index
-  //  *
-  //  * @return {type} Description
-  //  */
-  // extract() {
-  //   this.item.forEach(graphicsItem => {
-  //     addChildren(graphicsItem);
-  //     this.graphicsItem.push(graphicsItem);
-  //   });
-  //   this.sort();
-  // }
 
   sort() {
     this.graphicsItem.sort((a, b) => {
@@ -96,21 +84,13 @@ class Scene {
     return (mouseY - this.pos.y) / this.zoom;
   }
 
-  addChildren(graphicsItem) {
-    if (!graphicsItem.children.length)
-      return;
-    graphicsItem.children.forEach(child => {
-      this.addChildren(child);
-      this.graphicsItem.push(child);
-    });
 
-  }
 
   handleMouseDrag(event) {
-    this.graphicsItem.every((item) => {
+    let notHandled = this.graphicsItem.every((item) => {
       return item.handleMouseDrag(this.getMouseX(), this.getMouseY(), event);
     });
-    if (this.draggable) {
+    if (this.draggable && notHandled) {
 
       if (this.height * this.zoom > height) {
         let translate = {
@@ -188,16 +168,17 @@ class Scene {
 
     translate(this.pos.x, this.pos.y);
     scale(this.zoom);
-    fill(this.backgroundColor.r, this.backgroundColor.g, this.backgroundColor.b, this.backgroundColor.a);
 
     push();
     noStroke();
+    fill(this.backgroundColor.r, this.backgroundColor.g, this.backgroundColor.b, this.backgroundColor.a);
     rect(0, 0, this.width, this.height);
     pop();
 
+
     this.graphicsItem.reverseEach(item => {
-      item.draw()
-      console.log(item);
+      item.drawAll()
+      //console.log(item);
     });
 
 

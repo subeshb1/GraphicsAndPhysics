@@ -1,15 +1,16 @@
 let scene;
-let subesh = new Circle(100, 100, 100);
+let subesh = new Circle(0, 0, 100);
 
 function setup() {
   // put setup code here
   let can = createCanvas(1400, 900);
 
   scene = new Scene();
-  subesh.children.push(new Circle(100, 80, 10));
-  //let cir = new Circle(150,150,100);
+   subesh.children.push(new Circle(100-10, 100-10, 10));
+  let cir = new Circle(150,150,100);
 
-  scene.add(subesh);
+  scene.add(subesh,cir);
+  ellipseMode(CORNER);
   noLoop();
 
 }

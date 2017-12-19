@@ -7,11 +7,11 @@ function setup() {
 
   scene = new Scene();
    subesh.children.push(new Circle(100-10, 100-10, 10));
-  let cir = new Circle(150,150,100);
+  let bez =  new Bezier( { x: 100, y: 500 },  { x: 600  , y: 200 },{ x: 1100, y: 500 },{ x: 1100, y: 500 },{ x: 1100, y: 500 },{ x: 1100, y: 500 },{ x: 1100, y: 500 },{ x: 1100, y: 500 },{ x: 1100, y: 500 },{ x: 1100, y: 500 });
 
-  scene.add(subesh,cir);
-  ellipseMode(CORNER);
-  noLoop();
+  scene.add(bez);
+
+  //noLoop();
 
 }
 

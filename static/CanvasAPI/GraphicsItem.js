@@ -153,12 +153,13 @@ class Circle extends GraphicsItem {
   }
   draw() {
     push();
+
     fill(this.fill.r, this.fill.g, this.fill.b, this.fill.a);
     ellipse(this.pos.x, this.pos.y, this.radius * 2);
     pop();
   }
   isInside(mousex, mousey) {
-    if (dist(mousex, mousey, this.pos.x + this.radius, this.pos.y + this.radius) <= this.radius)
+    if (dist(mousex, mousey, this.pos.x , this.pos.y ) <= this.radius)
       return true;
     return false;
   }

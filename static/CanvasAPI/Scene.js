@@ -7,6 +7,10 @@
  *
  */
 class Scene {
+  /**
+   * @constructor 
+   * 
+   */
   constructor() {
     this.draggable = true;
     this.dragPoint = {

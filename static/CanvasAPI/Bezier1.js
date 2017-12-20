@@ -8,7 +8,8 @@ class Bezier extends GraphicsItem {
 
       this.ctrpt.push(new Circle(pt.x,pt.y,10));
     });
-    this.children.push(...this.ctrpt);
+    this.ctrpt.forEach(pt => this.children.unshift(pt));
+
     this.t = 0;
     this.inc = 5;
   }
@@ -22,14 +23,7 @@ class Bezier extends GraphicsItem {
   }
 
   draw() {
-    // //points
-    // push();
-    // ellipseMode(CENTER);
-    // fill(0);
-    // ellipse(this.start.pos.x, this.start.pos.y, 10);
-    // ellipse(this.end.x, this.end.y, 10);
-    // this.ctrpt.forEach((item) => ellipse(item.x, item.y, 10));
-    // pop();
+
     this.update();
     //Lines
     let len = this.ctrpt.length;
@@ -225,3 +219,5 @@ class Bezier extends GraphicsItem {
 
   }
 }
+
+

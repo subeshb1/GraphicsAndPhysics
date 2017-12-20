@@ -11,7 +11,7 @@ function setup() {
 
   scene.add(bez);
 
-  //noLoop();
+  noLoop();
 
 }
 

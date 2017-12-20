@@ -121,7 +121,7 @@ class GraphicsItem {
     this.draw();
     translate(this.pos.x, this.pos.y);
 
-    this.children.forEach(child => child.drawAll());
+    this.children.reverseEach(child => child.drawAll());
 
     pop();
   }

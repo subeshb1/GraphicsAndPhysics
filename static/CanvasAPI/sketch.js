@@ -23,19 +23,20 @@ function draw() {
 
 
 function mouseDragged(e) {
-  scene.handleMouseDrag(e);
+  let handled = scene.handleMouseDrag(e);
+  if(handled)
   redraw();
 }
 
 function mousePressed(e) {
 
   scene.handleMousePressed(e);
-  redraw();
+  
 }
 
 function mouseReleased(e) {
   scene.handleMouseReleased(e);
-  redraw();
+  //redraw();
 }
 
 

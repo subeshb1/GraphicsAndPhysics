@@ -114,8 +114,12 @@ class Scene {
           this.pos.y = -(this.height * this.zoom - height);
         if (this.pos.x + this.width * this.zoom < width)
           this.pos.x = -(this.width * this.zoom - width);
+        return true;
       }
+      return false;
     }
+    return true;
+
 
   }
 

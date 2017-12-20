@@ -3,43 +3,115 @@
 
 <head>
   <meta name="viewport" width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0>
-    <meta name="viewport" content="user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1,width=device-width">
+  <meta name="viewport" content="user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1,width=device-width">
   <style>
     /* body {
       padding: 0;
       margin: 0;
     } */
+
     .sidebar {
       position: fixed;
-      width:0%;
+      width: 100%;
       height: 100%;
       /* background : grey; */
       z-index: 100;
       display: none;
+      padding-top: 10px;
     }
-    .sidebar-content {
-      background: rgba(171, 171, 171, 0.79);
-      height: 100%;
-      opacity: 1;
 
+    .sidebar-content {
+
+      height: 100%;
+
+      padding: 0;
+    }
+
+    .content {
+      height: 100%;
+      /* width:100%; */
+      background: rgba(219, 157, 157, 0.849);
+    }
+
+    .sidebar-nav div {
+      border: 1px solid black;
+    }
+
+    #parent {
+      overflow: auto;
+    }
+
+    #sideBarToggler {
+      border-radius: 100%;
+      background: none;
+      color: white;
+      cursor: pointer;
+      font-size: 20px;
+      border: none;
+      outline: none;
+      padding: 5px 11px;
+    }
+
+    #sideBarToggler:active {
+      background: rgba(94, 94, 94, 0.747);
+    }
+
+    .btn:focus {
+      outline: none
+    }
+
+    .list-group-item {
+      cursor: pointer;
+      -webkit-user-select: none;
+      -khtml-user-select: none;
+      -moz-user-select: none;
+      -o-user-select: none;
+      user-select: none;
     }
   </style>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
+    crossorigin="anonymous">
 </head>
 
 <body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
 
-  <div class=" sidebar "  >
 
-    <div class="sidebar-content  col-12 col-md-6">
-        <li>Suebsh</li>
+
+    <button data-expand="false" class="mr-4" data-status="1" id="sideBarToggler">
+      <i class="fa fa-bars"></i>
+    </button>
+
+    <a class="navbar-brand " href="#">Bezier Curve</a>
+
+
+
+
+  </nav>
+  <div style="height:55px"></div>
+  <div class=" sidebar bg-secondary">
+
+    <div class="sidebar-content  col-12 ">
+      <div class="sidebar-nav  row">
+        <div class="sideList list-group-item col-6 col-md-2 border  rounded-top text-center bg-secondary ">Settings</div>
+        <div class="sideList list-group-item col-6 col-md-2  text-center border rounded-top border-bottom-0 bg-light check">Animation</div>
+      </div>
+      <div class="content bg-light row">
+
+      </div>
     </div>
   </div>
 
+  <div id="parent"></div>
 
-  <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
+    crossorigin="anonymous"></script>
   <script src="../p5.min.js"></script>
   <script src="../addons/p5.dom.min.js"></script>
   <script src="../addons/p5.sound.min.js"></script>
@@ -49,17 +121,7 @@
 
   <script src="sketch.js"></script>
 
-  <script type="text/javascript">
-  $(document).click(function(){
-  $('.sidebar').show();
-      $('.sidebar').animate({
-
-          width: '100%',
-    display: 'block',
-
-  });
-
-  });
+  <script src="Controller/indexcontroller.js">
   </script>
 </body>
 

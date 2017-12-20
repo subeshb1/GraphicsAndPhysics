@@ -1,4 +1,4 @@
-let curve;
+e:let curve;
 
 function preload() {
   curve = loadJSON("curve.json");

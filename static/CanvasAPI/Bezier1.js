@@ -1,17 +1,17 @@
 class Bezier extends GraphicsItem {
   constructor(...ctrpt) {
     super();
-    // this.start = new Circle(start.x,start.y,20);
-    // this.end = new Circle(end.x,end.y,20);
-    this.ctrpt = [];
-    ctrpt.forEach( pt => {
 
-      this.ctrpt.push(new Circle(pt.x,pt.y,10));
+    this.ctrpt = [];
+    ctrpt.forEach(pt => {
+
+      this.ctrpt.push(new Circle(pt.x, pt.y, 10));
     });
     this.ctrpt.forEach(pt => this.children.unshift(pt));
-
-    this.t = 0;
-    this.inc = 5;
+    this.animate = false;
+    this.t = 1000;
+    this.inc = 10;
+    this.showLine = true;
   }
 
   update() {
@@ -23,147 +23,49 @@ class Bezier extends GraphicsItem {
   }
 
   draw() {
-
-    this.update();
+    if(this.animate)
+      this.update();
     //Lines
     let len = this.ctrpt.length;
-    // line(this.start.x, this.start.y, this.ctrpt[0].x, this.ctrpt[0].y);
+    
     for (let i = 1; i < len; i++) {
+      push();
+      stroke(0,90);
       line(this.ctrpt[i - 1].pos.x, this.ctrpt[i - 1].pos.y, this.ctrpt[i].pos.x, this.ctrpt[i].pos.y);
+      pop();
     }
-    // line(this.ctrpt[len - 1].x, this.ctrpt[len - 1].y, this.end.x, this.end.y);
-
-    //console.log(pt);
+    
     let color = [{
+        r: 10,
+        g: 200,
+        b: 255
+      },
+      {
+        r: 10,
+        g: 200,
+        b: 100  
+      },
+      {
+        r: 50,
+        g: 100,
+        b: 200
+      },
+      {
         r: 200,
-        g: 0,
+        g: 200,
         b: 0
       },
       {
-        r: 200,
-        g: 50,
-        b: 50
-      },
-      {
-        r: 50,
-        g: 100,
-        b: 200
-      },
-      {
-        r: 100,
-        g: 200,
-        b: 100
+        r: 150,
+        g: 20,
+        b: 150
       }
-      ,
-      {
-        r: 50,
-        g: 100,
-        b: 200
-      },
-      {
-        r: 100,
-        g: 200,
-        b: 100
-
-      },
-      {
-        r: 100,
-        g: 200,
-        b: 100
-      }
-      ,
-      {
-        r: 50,
-        g: 100,
-        b: 200
-      },
-      {
-        r: 100,
-        g: 200,
-        b: 100
-      },{
-          r: 200,
-          g: 0,
-          b: 0
-        },
-        {
-          r: 200,
-          g: 50,
-          b: 50
-        },
-        {
-          r: 50,
-          g: 100,
-          b: 200
-        },
-        {
-          r: 100,
-          g: 200,
-          b: 100
-        },{
-            r: 200,
-            g: 0,
-            b: 0
-          },
-          {
-            r: 200,
-            g: 50,
-            b: 50
-          },
-          {
-            r: 50,
-            g: 100,
-            b: 200
-          },
-          {
-            r: 100,
-            g: 200,
-            b: 100
-          },{
-              r: 200,
-              g: 0,
-              b: 0
-            },
-            {
-              r: 200,
-              g: 50,
-              b: 50
-            },
-            {
-              r: 50,
-              g: 100,
-              b: 200
-            },
-            {
-              r: 100,
-              g: 200,
-              b: 100
-            },{
-                r: 200,
-                g: 0,
-                b: 0
-              },
-              {
-                r: 200,
-                g: 50,
-                b: 50
-              },
-              {
-                r: 50,
-                g: 100,
-                b: 200
-              },
-              {
-                r: 100,
-                g: 200,
-                b: 100
-              }
     ];
     let prev = this.ctrpt[0].pos;
     for (let k = 0; k <= this.t; k += Math.abs(this.inc)) {
       let t = k / 1000;
       let ctrpt = [];
-      this.ctrpt.forEach((pt)=>ctrpt.push(pt.pos));
+      this.ctrpt.forEach((pt) => ctrpt.push(pt.pos));
       while (ctrpt.length > 1) {
         let pt = [];
 
@@ -175,13 +77,13 @@ class Bezier extends GraphicsItem {
 
         }
         //  console.log(pt);
-        if (k == this.t) {
+        if (this.showLine && k == this.t && k!=1000) {
           for (let i = 0; i < pt.length - 1; i++) {
 
             push();
             let c = ctrpt.length - 1;
-            strokeWeight(2)
-            stroke(color[c].r, color[c].g, color[c].b,90);
+            strokeWeight(2);
+            stroke(color[c % 5].r, color[c % 5].g, color[c % 5].b, 90);
             line(pt[i].x, pt[i].y, pt[i + 1].x, pt[i + 1].y);
             pop();
           }
@@ -190,10 +92,13 @@ class Bezier extends GraphicsItem {
 
             push();
             noStroke();
-            fill(color[c].r, color[c].g, color[c].b);
+            if(c!=1)
+            fill(color[c % 5].r, color[c % 5].g, color[c % 5].b);
+            else
+            fill(255,0,0);
             ellipseMode(CENTER);
             ellipse(pt.x, pt.y, 10);
-              pop();
+            pop();
           });
 
         }
@@ -219,5 +124,3 @@ class Bezier extends GraphicsItem {
 
   }
 }
-
-

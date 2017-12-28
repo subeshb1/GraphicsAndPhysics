@@ -4,71 +4,7 @@
 <head>
   <meta name="viewport" width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0>
   <meta name="viewport" content="user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1,width=device-width">
-  <style>
-    /* body {
-      padding: 0;
-      margin: 0;
-    } */
-
-    .sidebar {
-      position: fixed;
-      width: 100%;
-      height: 100%;
-      /* background : grey; */
-      z-index: 100;
-      display: none;
-      padding-top: 10px;
-    }
-
-    .sidebar-content {
-
-      height: 100%;
-
-      padding: 0;
-    }
-
-    .content {
-      height: 100%;
-      /* width:100%; */
-      background: rgba(219, 157, 157, 0.849);
-    }
-
-    .sidebar-nav div {
-      border: 1px solid black;
-    }
-
-    #parent {
-      overflow: auto;
-    }
-
-    #sideBarToggler {
-      border-radius: 100%;
-      background: none;
-      color: white;
-      cursor: pointer;
-      font-size: 20px;
-      border: none;
-      outline: none;
-      padding: 5px 11px;
-    }
-
-    #sideBarToggler:active {
-      background: rgba(94, 94, 94, 0.747);
-    }
-
-    .btn:focus {
-      outline: none
-    }
-
-    .list-group-item {
-      cursor: pointer;
-      -webkit-user-select: none;
-      -khtml-user-select: none;
-      -moz-user-select: none;
-      -o-user-select: none;
-      user-select: none;
-    }
-  </style>
+  <link rel="stylesheet" href="main.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
     crossorigin="anonymous">
@@ -83,7 +19,7 @@
       <i class="fa fa-bars"></i>
     </button>
 
-    <a class="navbar-brand " href="#">Bezier Curve</a>
+    <div class="navbar-brand ">Bezier Curve</div>
 
 
 
@@ -94,13 +30,20 @@
 
     <div class="sidebar-content  col-12 ">
       <div class="sidebar-nav  row">
-        <div class="sideList list-group-item col-6 col-md-2 border  rounded-top text-center bg-secondary ">Settings</div>
-        <div class="sideList list-group-item col-6 col-md-2  text-center border rounded-top border-bottom-0 bg-light check">Animation</div>
+        <div class="sideList list-group-item col-6 col-md-2  text-center border rounded-top border-bottom-0 bg-light check" data-name="settings">Settings
+          <i class="fa fa-cog"></i>
+        </div>
+        <div class="sideList list-group-item col-6 col-md-2 border  rounded-top text-center bg-secondary " data-name="animation">Animation
+          <i class="fa fa-play-circle-o"></i>
+        </div>
+
       </div>
       <div class="content bg-light row">
+        
 
       </div>
     </div>
+  </div>
   </div>
 
   <div id="parent"></div>

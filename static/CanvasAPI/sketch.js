@@ -1,17 +1,18 @@
 let scene;
-let subesh = new Circle(0, 0, 100);
 
+let bez;
 function setup() {
   // put setup code here
-  let can = createCanvas(1400, 900);
+  let can = createCanvas(2000, 1000);
   can.parent('parent');
   scene = new Scene();
-   subesh.children.push(new Circle(100-10, 100-10, 10));
-  let bez =  new Bezier( { x: 100, y: 500 },  { x: 600  , y: 200 },{ x: 1100, y: 500 },{ x: 1100, y: 500 },{ x: 1100, y: 500 },{ x: 1100, y: 500 },{ x: 1100, y: 500 },{ x: 1100, y: 500 },{ x: 1100, y: 500 },{ x: 1100, y: 500 });
+  
+   bez =  new Bezier( { x: 100, y: 500 },  { x: 600  , y: 200 },{ x: 1100, y: 500 });
 
   scene.add(bez);
 
   noLoop();
+  
 
 }
 
@@ -29,7 +30,7 @@ function mouseDragged(e) {
 }
 
 function mousePressed(e) {
-
+  
   scene.handleMousePressed(e);
   
 }
@@ -52,3 +53,9 @@ function mouseMoved(e) {
   scene.handleMouseMove(e);
   //  redraw();
 }
+
+
+setInterval(function() {
+  if(bez.animate)
+    redraw();
+},30);

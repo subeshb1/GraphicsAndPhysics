@@ -146,14 +146,14 @@ class Circle extends GraphicsItem {
     this.fill = {
       r: 200,
       g: 200,
-      b: 100,
+      b: 200,
       a: 255
     }
 
   }
   draw() {
     push();
-
+    noStroke();
     fill(this.fill.r, this.fill.g, this.fill.b, this.fill.a);
     ellipse(this.pos.x, this.pos.y, this.radius * 2);
     pop();
@@ -162,5 +162,38 @@ class Circle extends GraphicsItem {
     if (dist(mousex, mousey, this.pos.x , this.pos.y ) <= this.radius)
       return true;
     return false;
+  }
+  handleMouseMove(mousex, mousey, e) {
+    let notHandled = this.children.every(child => {
+
+      return child.handleMouseMove(mousex - this.pos.x, mousey - this.pos.y, e);
+    });
+
+    if (notHandled) {
+      if (this.isDraggable && this.isInside(mousex, mousey)) {
+        cursor(MOVE);
+        this.fill = {
+          r: 200,
+          g: 200,
+          b: 200,
+          a: 200};
+          redraw();
+        return false;
+      } else {
+        this.fill = {
+          r: 100,
+          g: 100,
+          b: 100,
+          a: 200};
+        
+         
+        cursor(ARROW);
+        
+        return true;
+      }
+    }
+   
+    return false;
+
   }
 }

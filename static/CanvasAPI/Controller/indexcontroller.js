@@ -169,6 +169,7 @@ $(document).ready(function () {
 
 
   $('.content').on('click','#save',function() {
+    $('#sideBarToggler').trigger('click');
     $('#prop').find('input').each(function() {
       let prop = $(this).attr('id');
       if(prop != 'showLine') {
@@ -189,7 +190,7 @@ $(document).ready(function () {
     }); 
     console.log(dataBez.ctrpt);
     changeBez();
-    
+    redraw();
   });
 
   function changeBez() {

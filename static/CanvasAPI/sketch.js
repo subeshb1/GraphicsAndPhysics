@@ -1,5 +1,5 @@
 let scene;
-
+let interval;
 let bez;
 function setup() {
   // put setup code here
@@ -55,7 +55,18 @@ function mouseMoved(e) {
 }
 
 
-setInterval(function() {
-  if(bez.animate)
-    redraw();
-},30);
+
+
+function start() {
+  bez.animate = true;
+ interval =  setInterval(function() {
+   
+      redraw();
+  },30);
+  
+}
+
+function stop() {
+  bez.animate = false;
+  clearInterval(interval);
+}
